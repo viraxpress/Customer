@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+<!-- 
+/**
+ * ViraXpress - https://www.viraxpress.com
+ *
+ * LICENSE AGREEMENT
+ *
+ * This file is part of the ViraXpress package and is licensed under the ViraXpress license agreement.
+ * You can view the full license at:
+ * https://www.viraxpress.com/license
+ *
+ * By utilizing this file, you agree to comply with the terms outlined in the ViraXpress license.
+ *
+ * DISCLAIMER
+ *
+ * Modifications to this file are discouraged to ensure seamless upgrades and compatibility with future releases.
+ *
+ * @category    ViraXpress
+ * @package     ViraXpress_Customer
+ * @author      ViraXpress
+ * @copyright   © 2024 ViraXpress (https://www.viraxpress.com/)
+ * @license     https://www.viraxpress.com/license
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Magento\Customer\Block\Account\SortLink" type="ViraXpress\Customer\Block\Account\SortLink" />
+    <preference for="Magento\Framework\View\Element\Html\Date" type="ViraXpress\Customer\View\Element\Html\Date" />
+    <preference for="Magento\Customer\Block\Account\Link" type="ViraXpress\Customer\Block\Account\Link" />
+    <preference for="Magento\Customer\Block\Account\Navigation" type="ViraXpress\Customer\Block\Account\Navigation" />
+    <preference for="Magento\Customer\Block\Widget\Name" type="ViraXpress\Customer\Block\Widget\Name" />
+</config>
