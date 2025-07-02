@@ -30,9 +30,16 @@ use Magento\Customer\Helper\Address;
 use Magento\Customer\Api\CustomerMetadataInterface;
 use Magento\Customer\Model\Options;
 use Magento\Customer\Api\AddressMetadataInterface;
+use Magento\Customer\Model\SessionFactory as CustomerSession;
 
 class Name extends \Magento\Customer\Block\Widget\Name
 {
+
+    /**
+     * @var CustomerSession
+     */
+    private $customerSession;
+
     /**
      * @var CookieManagerInterface
      */
@@ -46,6 +53,7 @@ class Name extends \Magento\Customer\Block\Widget\Name
     /**
      * @param Context $context
      * @param Address $addressHelper
+     * @param CustomerSession $customerSession
      * @param CustomerMetadataInterface $customerMetadata
      * @param Options $options
      * @param AddressMetadataInterface $addressMetadata
@@ -56,6 +64,7 @@ class Name extends \Magento\Customer\Block\Widget\Name
     public function __construct(
         Context $context,
         Address $addressHelper,
+        CustomerSession $customerSession,
         CustomerMetadataInterface $customerMetadata,
         Options $options,
         AddressMetadataInterface $addressMetadata,
@@ -64,6 +73,7 @@ class Name extends \Magento\Customer\Block\Widget\Name
         array $data = []
     ) {
         $this->cookieManager = $cookieManager;
+        $this->customerSession = $customerSession;
         $this->cookieMetadataFactory = $cookieMetadataFactory;
         parent::__construct($context, $addressHelper, $customerMetadata, $options, $addressMetadata, $data);
     }
@@ -76,6 +86,11 @@ class Name extends \Magento\Customer\Block\Widget\Name
         $jsonData = $this->cookieManager->getCookie('guest_customer_data');
         if ($jsonData) {
             $customerData = json_decode($jsonData, true);
+            $customerSession = $this->customerSession->create();
+            if ($customerSession->isLoggedIn() && $customerData['email'] != $customerSession->getCustomer()->getEmail()) {
+                $customerData['first_name'] = $customerSession->getCustomer()->getFirstname();
+                $customerData['last_name'] = $customerSession->getCustomer()->getLastname();
+            }
             return $customerData;
         }
         return [];
